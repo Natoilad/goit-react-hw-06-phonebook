@@ -7,11 +7,8 @@ export const sliceFilter = createSlice({
     qwery(state, action) {
       return (state = action.payload);
     },
-
-    reset(state, action) {
-      return (state = '');
-    },
+    filter(state, action) {},
   },
 });
 
-export const { qwery, reset } = sliceFilter.actions;
+export const { qwery, filter } = sliceFilter.actions;

@@ -1,7 +1,4 @@
-import {
-  configureStore,
-  // createReducer
-} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 // import { storage } from 'redux-persist/lib/storage';
 // import {
 //   persistStore,

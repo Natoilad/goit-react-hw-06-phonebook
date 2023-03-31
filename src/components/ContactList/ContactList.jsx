@@ -5,7 +5,6 @@ import { remove } from 'redux/sliceContact';
 
 export const ContactList = ({ listContact }) => {
   const dispatch = useDispatch();
-  // const listContact = useSelector(state => state.contacts);
   return listContact.map(cont => {
     return (
       <p key={cont.id} className={css.listItem}>
@@ -27,6 +26,5 @@ export const ContactList = ({ listContact }) => {
 };
 
 ContactList.propTypes = {
-  // delContact: PropTypes.func.isRequired,
   listContact: PropTypes.array.isRequired,
 };

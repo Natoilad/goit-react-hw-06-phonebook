@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import css from './Filter.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { qwery } from 'redux/sliceFilter';
 
-export const Filter = ({ handleChange, filter }) => {
+export const Filter = () => {
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
   return (
     <>
       <label htmlFor="">
@@ -10,16 +13,11 @@ export const Filter = ({ handleChange, filter }) => {
       <input
         className={css.input}
         value={filter}
-        onChange={handleChange}
+        onChange={evt => dispatch(qwery(evt.currentTarget.value))}
         type="text"
         name="filter"
         placeholder="Find contacts by name"
       />
     </>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
 };
