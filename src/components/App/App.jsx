@@ -4,6 +4,8 @@ import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { ContactForm } from '../ContactForm/ContactForm';
 import css from './App.module.css';
+import { useDispatch } from 'react-redux';
+import { filterContacts } from 'redux/sliceFilter';
 const CONTATCTS = 'contatcts';
 const initialContacts = [
   { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
@@ -12,6 +14,7 @@ const initialContacts = [
   { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
 ];
 export const App = () => {
+  const dispatch = useDispatch();
   const [contacts, setContacts] = useState(
     () => JSON.parse(window.localStorage.getItem(CONTATCTS)) ?? initialContacts
   );
@@ -22,6 +25,7 @@ export const App = () => {
   }, [contacts]);
 
   const handleChange = evt => {
+    dispatch(filterContacts(evt.currentTarget.value));
     setFilter(evt.currentTarget.value);
   };
   const addContact = (nameContact, number) => {
@@ -55,6 +59,7 @@ export const App = () => {
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
+      <button>reset</button>
       <ContactForm addContact={addContact} />
       <h2>Contacts</h2>
       <Filter handleChange={handleChange} filter={filter} />

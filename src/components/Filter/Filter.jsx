@@ -13,6 +13,7 @@ export const Filter = ({ handleChange, filter }) => {
         onChange={handleChange}
         type="text"
         name="filter"
+        placeholder="Find contacts by name"
       />
     </>
   );
