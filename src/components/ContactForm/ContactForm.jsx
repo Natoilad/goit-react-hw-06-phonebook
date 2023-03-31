@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { add } from 'redux/sliceContact';
 
-export const ContactForm = ({ addContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -14,12 +17,21 @@ export const ContactForm = ({ addContact }) => {
     setName('');
     setNumber('');
   };
+  const contacts = useSelector(state => state.contacts);
   return (
     <form
       className={css.form}
       onSubmit={e => {
         e.preventDefault();
-        addContact(name, number);
+        if (
+          contacts.some(
+            value => value.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+          )
+        ) {
+          alert(`${name} is alredy in contacts`);
+        } else {
+          dispatch(add({ name, number }));
+        }
         reset();
       }}
     >
@@ -59,6 +71,6 @@ export const ContactForm = ({ addContact }) => {
   );
 };
 
-ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};
+// ContactForm.propTypes = {
+//   addContact: PropTypes.func.isRequired,
+// };

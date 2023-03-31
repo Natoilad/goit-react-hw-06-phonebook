@@ -4,8 +4,9 @@ import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { ContactForm } from '../ContactForm/ContactForm';
 import css from './App.module.css';
-import { useDispatch } from 'react-redux';
-import { filterContacts } from 'redux/sliceFilter';
+import { useDispatch, useSelector } from 'react-redux';
+import { qwery, reset } from 'redux/sliceFilter';
+import { add, remove } from 'redux/sliceContact';
 const CONTATCTS = 'contatcts';
 const initialContacts = [
   { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
@@ -15,36 +16,39 @@ const initialContacts = [
 ];
 export const App = () => {
   const dispatch = useDispatch();
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(window.localStorage.getItem(CONTATCTS)) ?? initialContacts
-  );
+  // const contR = useSelector(state => state.contacts);
+  const filtered = useSelector(state => state.filter);
+  // const [contacts, setContacts] = useState(
+  // () => JSON.parse(window.localStorage.getItem(CONTATCTS)) ?? initialContacts
+  // );
   const [filter, setFilter] = useState('');
+  const contacts = useSelector(state => state.contacts);
 
   useEffect(() => {
     window.localStorage.setItem(CONTATCTS, JSON.stringify(contacts));
   }, [contacts]);
 
   const handleChange = evt => {
-    dispatch(filterContacts(evt.currentTarget.value));
+    dispatch(qwery(evt.currentTarget.value));
     setFilter(evt.currentTarget.value);
   };
-  const addContact = (nameContact, number) => {
-    if (
-      contacts.some(
-        value =>
-          value.name.toLocaleLowerCase() === nameContact.toLocaleLowerCase()
-      )
-    ) {
-      alert(`${nameContact} is alredy in contacts`);
-    } else {
-      setContacts(prevCont => {
-        return [
-          ...prevCont,
-          { id: nanoid(), name: nameContact, number: number },
-        ];
-      });
-    }
-  };
+  // const addContact = (nameContact, number) => {
+  //   if (
+  //     contacts.some(
+  //       value =>
+  //         value.name.toLocaleLowerCase() === nameContact.toLocaleLowerCase()
+  //     )
+  //   ) {
+  //     alert(`${nameContact} is alredy in contacts`);
+  //   } else {
+  //     setContacts(prevCont => {
+  //       return [
+  //         ...prevCont,
+  //         { id: nanoid(), name: nameContact, number: number },
+  //       ];
+  //     });
+  //   }
+  // };
   const filterContact = e => {
     const filteredContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
@@ -53,17 +57,25 @@ export const App = () => {
   };
   const delContact = id => {
     const filtred = contacts.filter(item => item.id !== id);
-    setContacts(filtred);
+    // setContacts(filtred);
   };
 
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <button>reset</button>
-      <ContactForm addContact={addContact} />
+      {/* <span>{contR}</span>
+      <button onClick={() => dispatch(add(5))}>add</button>
+      <button onClick={() => dispatch(remove())}>remove</button>
+      <button onClick={() => dispatch(reset())}>reset</button>
+      <input
+        value={filtered}
+        onChange={e => dispatch(qwery(e.target.value))}
+        type="text"
+      /> */}
+      <ContactForm />
       <h2>Contacts</h2>
-      <Filter handleChange={handleChange} filter={filter} />
-      <ContactList delContact={delContact} listContact={filterContact()} />
+      <Filter handleChange={handleChange} filter={filtered} />
+      <ContactList listContact={filterContact()} />
     </div>
   );
 };

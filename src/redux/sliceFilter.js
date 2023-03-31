@@ -4,13 +4,14 @@ export const sliceFilter = createSlice({
   name: 'filter',
   initialState: '',
   reducers: {
-    filterContacts(state, action) {
+    qwery(state, action) {
       return (state = action.payload);
     },
+
     reset(state, action) {
       return (state = '');
     },
   },
 });
 
-export const { filterContacts } = sliceFilter.actions;
+export const { qwery, reset } = sliceFilter.actions;
