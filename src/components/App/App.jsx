@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+// import { useState, useEffect } from 'react';
+// import { nanoid } from 'nanoid';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { ContactForm } from '../ContactForm/ContactForm';
 import css from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { qwery, reset } from 'redux/sliceFilter';
-import { add, remove } from 'redux/sliceContact';
-const CONTATCTS = 'contatcts';
-const initialContacts = [
-  { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
-  { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
-  { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
-  { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
-];
+import { qwery } from 'redux/sliceFilter';
+// import { add, remove } from 'redux/sliceContact';
+// const CONTATCTS = 'contatcts';
+// const initialContacts = [
+//   { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
+//   { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
+//   { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
+//   { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
+// ];
 export const App = () => {
   const dispatch = useDispatch();
   // const contR = useSelector(state => state.contacts);
@@ -21,16 +21,16 @@ export const App = () => {
   // const [contacts, setContacts] = useState(
   // () => JSON.parse(window.localStorage.getItem(CONTATCTS)) ?? initialContacts
   // );
-  const [filter, setFilter] = useState('');
+  // const [filter, setFilter] = useState('');
   const contacts = useSelector(state => state.contacts);
 
-  useEffect(() => {
-    window.localStorage.setItem(CONTATCTS, JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   window.localStorage.setItem(CONTATCTS, JSON.stringify(contacts));
+  // }, [contacts]);
 
   const handleChange = evt => {
     dispatch(qwery(evt.currentTarget.value));
-    setFilter(evt.currentTarget.value);
+    // setFilter(evt.currentTarget.value);
   };
   // const addContact = (nameContact, number) => {
   //   if (
@@ -51,14 +51,14 @@ export const App = () => {
   // };
   const filterContact = e => {
     const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact.name.toLowerCase().includes(filtered.toLowerCase())
     );
     return filteredContacts;
   };
-  const delContact = id => {
-    const filtred = contacts.filter(item => item.id !== id);
-    // setContacts(filtred);
-  };
+  // const delContact = id => {
+  //   const filtred = contacts.filter(item => item.id !== id);
+  //   // setContacts(filtred);
+  // };
 
   return (
     <div className={css.container}>
